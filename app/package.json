@@ -40,6 +40,7 @@
     "author": "",
     "license": "MIT",
     "dependencies": {
+        "epubjs": "^0.3.85",
         "node-addon-api": "^1.7.1"
     },
     "devDependencies": {
