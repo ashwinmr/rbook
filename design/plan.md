@@ -1,5 +1,9 @@
 # Required features
 
-# Funcationality
+## Funcationality
 
-# Interface
+- open epub file
+- go to next page
+- go to previous page
+
+## Interface
