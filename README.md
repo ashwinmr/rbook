@@ -1,12 +1,12 @@
-# Electron Template
+# rbook
 
-A template for electron apps
+A simple electron app for reading ebooks
 
 ![Screenshot](./screenshots/sc_1.png)
 
 # Features
 
-- Feature
+- 
 
 # Getting Started
 
@@ -14,10 +14,6 @@ A template for electron apps
 cd app
 npm install
 npm start
-
-or
-
-download from release tab
 ```
 
 # Build
