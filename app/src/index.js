@@ -4,56 +4,63 @@ const url = require('url')
 const ePub = require('epubjs').default
 
 // Create object to handle file
-class File_C {
+class FileClass {
 
     constructor() {
-        this.Opened = false
-        this.Name = undefined
+        this.opened = false
+        this.dir = undefined
+        this.name = undefined
     }
 
     // Get the file path
-    get Path() {
-        if (this.Opened) {
-            return path.join(this.Dir, this.Name)
+    get path() {
+        if (this.opened) {
+            return path.join(this.dir, this.name)
         }
     }
 
     // Open file and store data
-    Open(file_path) {
-        if (file_path === undefined) {
+    open(filePath) {
+        if (filePath === undefined) {
             return
         }
-        this.Opened = true
-        this.Name = path.basename(file_path)
-        document.getElementById('title').innerHTML = this.Name
+        this.opened = true
+        this.dir = path.dirname(filePath)
+        this.name = path.basename(filePath)
+        document.getElementById('title').innerHTML = this.name
 
         // Display the book
-        Book.Load(file_path)
+        Book.load(filePath)
     }
 }
-var File = new File_C
+var File = new FileClass
 
 // Create object to handle book
-class Book_C {
+class BookClass {
 
     constructor() {
-        this.Data = undefined
+        this.data = undefined
+        this.rendition = undefined
     }
 
-    Load(file_path) {
-        this.Data = ePub(file_path)
-        this.Display()
+    load(filePath) {
+        this.data = ePub(filePath)
+        this.display()
     }
 
-    Display() {
-        var rendition = this.Data.renderTo("area", { width: 600, height: 400 });
-        var displayed = rendition.display();
+    display() {
+        this.rendition = this.data.renderTo("area", { width: 600, height: 400 });
+        var displayed = this.rendition.display();
     }
+
+
+
+
 }
-var Book = new Book_C
+var Book = new BookClass
 
 
 // Handle main process events
-ipcRenderer.on("Open", (e, file_path) => {
-    File.Open(file_path)
+ipcRenderer.on("Open", (e, filePath) => {
+    File.open(filePath)
 })
