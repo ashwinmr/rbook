@@ -78,12 +78,17 @@ app.on('ready', function createWindow() {
             label: 'Help',
             // Allow opening browser dev tool
             submenu: [{
-                label: 'DevTool',
-                accelerator: 'Ctrl+D',
-                click() {
-                    win.webContents.toggleDevTools()
+                    label: 'DevTool',
+                    accelerator: 'Ctrl+D',
+                    click() {
+                        win.webContents.toggleDevTools()
+                    }
+                },
+                {
+                    label: 'rbook version ' + app.getVersion(),
+
                 }
-            }]
+            ]
         }
     ])
 
