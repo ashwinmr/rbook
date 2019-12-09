@@ -60,6 +60,21 @@ app.on('ready', function createWindow() {
             ]
         },
         {
+            label: 'Edit',
+            // Options edit the page view
+            submenu: [{
+                    label: 'Next Page',
+                    click() { win.webContents.send('Next_Page') },
+                    accelerator: 'Right'
+                },
+                {
+                    label: 'Previous Page',
+                    click() { win.webContents.send('Previous_Page') },
+                    accelerator: 'Left'
+                },
+            ]
+        },
+        {
             label: 'Help',
             // Allow opening browser dev tool
             submenu: [{
