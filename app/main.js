@@ -85,8 +85,7 @@ app.on('ready', function createWindow() {
                     }
                 },
                 {
-                    label: 'rbook version ' + app.getVersion(),
-
+                    label: app.getName() + ' version ' + app.getVersion(),
                 }
             ]
         }
