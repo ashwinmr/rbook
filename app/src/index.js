@@ -68,21 +68,24 @@ class BookClass {
 
     display() {
         this.rendition = this.data.renderTo("book_cont");
-        var displayed = this.rendition.display();
-        updatePage(this.currentPage, this.pages)
+        this.rendition.display().then(() => {
+            updatePage(this.currentPage, this.pages)
+        })
     }
 
     nextPage() {
         if (this.rendition !== undefined) {
-            this.rendition.next()
-            updatePage(this.currentPage, this.pages)
+            this.rendition.next().then(() => {
+                updatePage(this.currentPage, this.pages)
+            })
         }
     }
 
     previousPage() {
         if (this.rendition !== undefined) {
-            this.rendition.prev()
-            updatePage(this.currentPage, this.pages)
+            this.rendition.prev().then(() => {
+                updatePage(this.currentPage, this.pages)
+            })
         }
     }
 }
