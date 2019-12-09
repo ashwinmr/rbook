@@ -49,7 +49,7 @@ class BookClass {
     }
 
     display() {
-        this.rendition = this.data.renderTo("area", { width: 600, height: 400 });
+        this.rendition = this.data.renderTo("book_cont");
         var displayed = this.rendition.display();
     }
 
