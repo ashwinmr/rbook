@@ -61,7 +61,7 @@ class BookClass {
 
     previousPage() {
         if (this.rendition !== undefined) {
-            this.rendition.next()
+            this.rendition.prev()
         }
     }
 
