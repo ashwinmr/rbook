@@ -1,6 +1,16 @@
-const { app, BrowserWindow, Menu, ipcMain } = require('electron')
+const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron')
+const fs = require('fs')
 const path = require('path')
 const url = require('url')
+
+// Check if path is file
+function Is_File(path) {
+    if (fs.existsSync(path) && fs.lstatSync(path).isFile()) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 // Start the program when app is ready
 app.on('ready', function createWindow() {
@@ -25,13 +35,29 @@ app.on('ready', function createWindow() {
     const menu = Menu.buildFromTemplate([{
             label: 'File',
             submenu: [{
-                // Quit
-                label: 'Quit',
-                accelerator: 'ctrl+q',
-                click() {
-                    win.close()
-                }
-            }, ]
+                    // Open dialog
+                    label: 'Open',
+                    accelerator: 'Ctrl+o',
+                    click() {
+                        dialog.showOpenDialog({
+                            title: "Open",
+                        }).then((result) => {
+                            file_paths = result.filePaths
+                            if (Is_File(file_paths[0])) {
+                                win.webContents.send("Open", file_paths[0])
+                            }
+                        })
+                    }
+                },
+                {
+                    // Quit
+                    label: 'Quit',
+                    accelerator: 'ctrl+q',
+                    click() {
+                        win.close()
+                    }
+                },
+            ]
         },
         {
             label: 'Help',
