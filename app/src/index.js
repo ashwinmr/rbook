@@ -53,7 +53,17 @@ class BookClass {
         var displayed = this.rendition.display();
     }
 
+    nextPage() {
+        if (this.rendition !== undefined) {
+            this.rendition.next()
+        }
+    }
 
+    previousPage() {
+        if (this.rendition !== undefined) {
+            this.rendition.next()
+        }
+    }
 
 
 }
@@ -63,4 +73,10 @@ var Book = new BookClass
 // Handle main process events
 ipcRenderer.on("Open", (e, filePath) => {
     File.open(filePath)
+})
+ipcRenderer.on("Next_Page", (e) => {
+    Book.nextPage()
+})
+ipcRenderer.on("Previous_Page", (e) => {
+    Book.previousPage()
 })
