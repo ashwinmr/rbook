@@ -1,1 +1,4 @@
-﻿
+﻿body {
+    /* Hide scroll bars */
+    overflow: hidden;
+}
