@@ -85,7 +85,7 @@ app.on('ready', function createWindow() {
                     }
                 },
                 {
-                    label: app.getName() + ' version ' + app.getVersion(),
+                    label: app.name + ' version ' + app.getVersion(),
                 }
             ]
         }
