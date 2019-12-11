@@ -15,8 +15,10 @@ console.log('cpp addon: ', example_addon.hello("from cpp"));
 app.on('ready', function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({
+        title: app.name,
         show: false, // Show and maximize later
         icon: path.join(__dirname, 'assets', 'icons', 'main_icon.png'),
+        useContentSize: true,
         resizable: true,
         webPreferences: {
             nodeIntegration: true

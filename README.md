@@ -14,10 +14,6 @@ A template for electron apps
 cd app
 npm install
 npm start
-
-or
-
-download from release tab
 ```
 
 # Build
