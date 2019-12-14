@@ -72,6 +72,16 @@ app.on('ready', function createWindow() {
                     click() { win.webContents.send('Previous_Page') },
                     accelerator: 'Left'
                 },
+                {
+                    label: 'Increase Font Size',
+                    click() { win.webContents.send('Increase_Font_Size') },
+                    accelerator: 'Ctrl+Up'
+                },
+                {
+                    label: 'Decrease Font Size',
+                    click() { win.webContents.send('Decrease_Font_Size') },
+                    accelerator: 'Ctrl+Down'
+                },
             ]
         },
         {

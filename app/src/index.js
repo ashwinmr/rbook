@@ -102,3 +102,5 @@ ipcRenderer.on("Next_Page", (e) => {
 ipcRenderer.on("Previous_Page", (e) => {
     Book.previousPage()
 })
+ipcRenderer.on("Increase_Font_Size", (e) => {})
+ipcRenderer.on("Decrease_Font_Size", (e) => {})
