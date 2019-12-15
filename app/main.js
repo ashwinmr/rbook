@@ -111,6 +111,13 @@ app.on('ready', function createWindow() {
 
     // Perform actions after window is loaded
     win.webContents.on('did-finish-load', () => {
+
+        // Handle loading of file when opened with electron
+        let path_arg = process.argv[1]
+        if (Is_File(path_arg)) {
+            win.webContents.send("Open", path_arg)
+        }
+
         // Show and maximize
         win.show()
     })
