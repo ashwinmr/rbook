@@ -47,6 +47,7 @@ class BookClass {
         this.data = undefined
         this.rendition = undefined
         this.pages = undefined
+        this.fontSize = 100
     }
 
     // To-do: find a way to get current page
@@ -88,6 +89,19 @@ class BookClass {
             })
         }
     }
+
+    incrementFontSize(increment) {
+        this.fontSize += increment
+        if (this.fontSize < 1) {
+            this.fontSize = 1;
+        }
+        this.rendition.themes.fontSize(this.fontSize + "%")
+    }
+
+    resetFontSize() {
+        this.fontSize = 100
+        this.rendition.themes.fontSize(this.fontSize + "%")
+    }
 }
 var Book = new BookClass
 
@@ -102,5 +116,12 @@ ipcRenderer.on("Next_Page", (e) => {
 ipcRenderer.on("Previous_Page", (e) => {
     Book.previousPage()
 })
-ipcRenderer.on("Increase_Font_Size", (e) => {})
-ipcRenderer.on("Decrease_Font_Size", (e) => {})
+ipcRenderer.on("Increase_Font_Size", (e) => {
+    Book.incrementFontSize(10)
+})
+ipcRenderer.on("Decrease_Font_Size", (e) => {
+    Book.incrementFontSize(-10)
+})
+ipcRenderer.on("Reset_Font_Size", (e) => {
+    Book.resetFontSize()
+})

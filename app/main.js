@@ -82,6 +82,11 @@ app.on('ready', function createWindow() {
                     click() { win.webContents.send('Decrease_Font_Size') },
                     accelerator: 'Ctrl+Down'
                 },
+                {
+                    label: 'Reset Font Size',
+                    click() { win.webContents.send('Reset_Font_Size') },
+                    accelerator: 'Ctrl+R'
+                },
             ]
         },
         {
