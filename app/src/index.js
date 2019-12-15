@@ -73,6 +73,17 @@ class BookClass {
     display() {
         this.rendition = this.data.renderTo("book_cont");
         this.rendition.display().then(() => {
+
+            // Handle drag and drop of files on the iframe
+            document.getElementsByTagName('iframe')[0].contentWindow.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            })
+            document.getElementsByTagName('iframe')[0].contentWindow.addEventListener('drop', (e) => {
+                e.preventDefault();
+                let file_path = e.dataTransfer.files[0].path
+                File.open(file_path)
+            })
+
             updatePage(this.currentPage, this.pages)
         })
     }
@@ -108,16 +119,14 @@ class BookClass {
 }
 var Book = new BookClass
 
-// Handle drag and drop
+// Handle drag and drop on main window
 document.addEventListener('dragover', (e) => {
     e.preventDefault();
 })
 document.addEventListener('drop', (e) => {
     e.preventDefault();
-    let file = e.dataTransfer.files[0]
-    if (file !== undefined) {
-        File.open(file.path)
-    }
+    let file_path = e.dataTransfer.files[0].path
+    File.open(file_path)
 })
 
 // Handle main process events
