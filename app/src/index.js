@@ -108,6 +108,17 @@ class BookClass {
 }
 var Book = new BookClass
 
+// Handle drag and drop
+document.addEventListener('dragover', (e) => {
+    e.preventDefault();
+})
+document.addEventListener('drop', (e) => {
+    e.preventDefault();
+    let file = e.dataTransfer.files[0]
+    if (file !== undefined) {
+        File.open(file.path)
+    }
+})
 
 // Handle main process events
 ipcRenderer.on("Open", (e, filePath) => {
