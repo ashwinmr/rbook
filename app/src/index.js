@@ -34,7 +34,10 @@ class FileClass {
         this.name = path.basename(filePath)
         document.getElementById('title').innerHTML = this.name
 
-        // Display the book
+        if (Book.data) {
+            Book.data.destroy()
+        }
+        Book = new BookClass
         Book.load(filePath)
     }
 }
