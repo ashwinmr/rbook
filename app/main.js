@@ -12,6 +12,28 @@ function Is_File(path) {
     }
 }
 
+// Set fullscreen
+function Set_Fullscreen(set_val) {
+    if (set_val) {
+        win.setFullScreen(true)
+        win.setMenuBarVisibility(false)
+        win.webContents.send('Set_Fullscreen', true)
+    } else {
+        win.setFullScreen(false)
+        win.setMenuBarVisibility(true)
+        win.webContents.send('Set_Fullscreen', false)
+    }
+}
+
+// Toggle fullscreen
+function Toggle_Fullscreen(win) {
+    if (win.isFullScreen()) {
+        Set_Fullscreen(false)
+    } else {
+        Set_Fullscreen(true)
+    }
+}
+
 // Start the program when app is ready
 app.on('ready', function createWindow() {
     // Create the browser window.
@@ -86,6 +108,16 @@ app.on('ready', function createWindow() {
                     label: 'Reset Font Size',
                     click() { win.webContents.send('Reset_Font_Size') },
                     accelerator: 'Ctrl+R'
+                },
+                {
+                    label: 'Toggle Fullscreen',
+                    click() { Toggle_Fullscreen(win) },
+                    accelerator: 'F11'
+                },
+                {
+                    label: 'Exit Fullscreen',
+                    click() { Set_Fullscreen(false) },
+                    accelerator: 'Esc'
                 },
             ]
         },
