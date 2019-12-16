@@ -72,24 +72,30 @@ class BookClass {
     }
 
     setSinglePage(setVal) {
+        let success = false
         if (this.rendition === undefined) {
-            return
+            return success
         }
         if (setVal) {
             this.rendition.spread("none")
             this.singlePage = true
+            success = true
         } else {
             this.rendition.spread("auto")
             this.singlePage = false
+            success = true
         }
+        return success
     }
 
     toggleSinglePage() {
+        let success = false
         if (this.singlePage) {
-            this.setSinglePage(false)
+            success = this.setSinglePage(false)
         } else {
-            this.setSinglePage(true)
+            success = this.setSinglePage(true)
         }
+        return success
     }
 
     display() {

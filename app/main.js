@@ -123,7 +123,6 @@ app.on('ready', function createWindow() {
                 {
                     label: 'Toggle Fullscreen',
                     click() { Toggle_Fullscreen(win) },
-                    type: "checkbox",
                     accelerator: 'F11'
                 },
                 {
