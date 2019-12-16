@@ -6,7 +6,7 @@ const ePub = require('epubjs').default
 // Update page display
 function updateLocation(percent) {
     total = 100
-    document.getElementById('page_number').textContent = percent + '/' + total
+    document.getElementById('location').textContent = percent + '/' + total
 }
 
 // Create object to handle file
