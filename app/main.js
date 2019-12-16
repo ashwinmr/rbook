@@ -82,8 +82,8 @@ app.on('ready', function createWindow() {
             ]
         },
         {
-            label: 'Edit',
-            // Options edit the page view
+            label: 'Navigate',
+            // Options to navigate
             submenu: [{
                     label: 'Next Page',
                     click() { win.webContents.send('Next_Page') },
@@ -94,7 +94,12 @@ app.on('ready', function createWindow() {
                     click() { win.webContents.send('Previous_Page') },
                     accelerator: 'Left'
                 },
-                {
+            ]
+        },
+        {
+            label: 'View',
+            // View options
+            submenu: [{
                     label: 'Increase Font Size',
                     click() { win.webContents.send('Increase_Font_Size') },
                     accelerator: 'Ctrl+Up'
