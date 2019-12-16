@@ -115,8 +115,15 @@ app.on('ready', function createWindow() {
                     accelerator: 'Ctrl+R'
                 },
                 {
+                    label: 'Force Single Page',
+                    click() { win.webContents.send('Toggle_Single_Page') },
+                    type: "checkbox",
+                    accelerator: 'Ctrl+1'
+                },
+                {
                     label: 'Toggle Fullscreen',
                     click() { Toggle_Fullscreen(win) },
+                    type: "checkbox",
                     accelerator: 'F11'
                 },
                 {

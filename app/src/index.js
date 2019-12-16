@@ -50,6 +50,7 @@ class BookClass {
         this.data = undefined
         this.rendition = undefined
         this.pages = undefined
+        this.singlePage = false
         this.fontSize = 100
     }
 
@@ -68,6 +69,24 @@ class BookClass {
             this.pages = this.data.pageList.lastPage
             this.display()
         })
+    }
+
+    setSinglePage(setVal) {
+        if (setVal) {
+            this.rendition.spread("none")
+            this.singlePage = true
+        } else {
+            this.rendition.spread("auto")
+            this.singlePage = false
+        }
+    }
+
+    toggleSinglePage() {
+        if (this.singlePage) {
+            this.setSinglePage(false)
+        } else {
+            this.setSinglePage(true)
+        }
     }
 
     display() {
@@ -147,4 +166,7 @@ ipcRenderer.on("Decrease_Font_Size", (e) => {
 })
 ipcRenderer.on("Reset_Font_Size", (e) => {
     Book.resetFontSize()
+})
+ipcRenderer.on("Toggle_Single_Page", (e) => {
+    Book.toggleSinglePage()
 })
