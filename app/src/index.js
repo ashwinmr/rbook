@@ -4,8 +4,9 @@ const url = require('url')
 const ePub = require('epubjs').default
 
 // Update page display
-function updatePage(current, total) {
-    document.getElementById('page_number').textContent = current + '/' + total
+function updateLocation(percent) {
+    total = 100
+    document.getElementById('page_number').textContent = percent + '/' + total
 }
 
 // Create object to handle file
@@ -49,15 +50,16 @@ class BookClass {
     constructor() {
         this.data = undefined
         this.rendition = undefined
-        this.pages = undefined
         this.singlePage = false
         this.fontSize = 100
     }
 
-    // To-do: find a way to get current page
-    get currentPage() {
+    // Get current page in percent
+    get currentPercent() {
         if (this.rendition !== undefined) {
-            return 0
+            let currentLocation = this.rendition.currentLocation().start.cfi
+            let currentPercent = this.data.locations.percentageFromCfi(currentLocation) * 100
+            return Math.round(currentPercent * 100) / 100;
         } else {
             return 0
         }
@@ -66,7 +68,9 @@ class BookClass {
     load(filePath) {
         this.data = ePub(filePath)
         this.data.ready.then(() => {
-            this.pages = this.data.pageList.lastPage
+            // generate locations
+            this.data.locations.generate().then(() => {})
+                // Don't wait for generation to display
             this.display()
         })
     }
@@ -106,14 +110,14 @@ class BookClass {
                 File.open(file_path)
             })
 
-            updatePage(this.currentPage, this.pages)
+            updateLocation(this.currentPercent)
         })
     }
 
     nextPage() {
         if (this.rendition !== undefined) {
             this.rendition.next().then(() => {
-                updatePage(this.currentPage, this.pages)
+                updateLocation(this.currentPercent)
             })
         }
     }
@@ -121,7 +125,7 @@ class BookClass {
     previousPage() {
         if (this.rendition !== undefined) {
             this.rendition.prev().then(() => {
-                updatePage(this.currentPage, this.pages)
+                updateLocation(this.currentPercent)
             })
         }
     }
