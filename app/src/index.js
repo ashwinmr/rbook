@@ -72,6 +72,9 @@ class BookClass {
     }
 
     setSinglePage(setVal) {
+        if (this.rendition === undefined) {
+            return
+        }
         if (setVal) {
             this.rendition.spread("none")
             this.singlePage = true
