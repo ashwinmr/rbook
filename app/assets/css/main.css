@@ -2,3 +2,65 @@
     /* Hide scroll bars */
     overflow: hidden;
 }
+
+#book_cont {}
+
+#control_bar {
+    user-select: none;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+    white-space: nowrap;
+    z-index: 100;
+}
+
+.hover_show {
+    /* Show only on hover */
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.hover_show:hover {
+    /* Show on hover */
+    opacity: 1;
+}
+
+button {
+    user-select: inherit;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 40px;
+    margin: 5px 10px 5px 10px;
+}
+
+button:hover {
+    filter: brightness(0.6);
+}
+
+button:active {
+    filter: brightness(0.2);
+}
+
+
+/* Set image for each button */
+
+#decrease_font_size {
+    background: url(../ui/decrease_font_size_btn.svg);
+}
+
+#increase_font_size {
+    background: url(../ui/increase_font_size_btn.svg);
+}
+
+#single_page {
+    background: url(../ui/single_page_btn.svg);
+}
+
+#fullscreen {
+    background: url(../ui/fullscreen_btn.svg);
+}
