@@ -116,7 +116,10 @@ app.on('ready', function createWindow() {
                 },
                 {
                     label: 'Force Single Page',
-                    click() { win.webContents.send('Toggle_Single_Page') },
+                    id: 'Force_Single_Page',
+                    click() {
+                        win.webContents.send('Toggle_Single_Page')
+                    },
                     type: "checkbox",
                     accelerator: 'Ctrl+1'
                 },
@@ -163,6 +166,11 @@ app.on('ready', function createWindow() {
 
         // Show and maximize
         win.show()
+    })
+
+    // Handle toggle single page response
+    ipcMain.on('Toggle_Single_Page', (e, state) => {
+        menu.getMenuItemById('Force_Single_Page').checked = state
     })
 })
 

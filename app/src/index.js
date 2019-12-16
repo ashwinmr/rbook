@@ -72,30 +72,24 @@ class BookClass {
     }
 
     setSinglePage(setVal) {
-        let success = false
         if (this.rendition === undefined) {
-            return success
+            return
         }
         if (setVal) {
             this.rendition.spread("none")
             this.singlePage = true
-            success = true
         } else {
             this.rendition.spread("auto")
             this.singlePage = false
-            success = true
         }
-        return success
     }
 
     toggleSinglePage() {
-        let success = false
         if (this.singlePage) {
-            success = this.setSinglePage(false)
+            this.setSinglePage(false)
         } else {
-            success = this.setSinglePage(true)
+            this.setSinglePage(true)
         }
-        return success
     }
 
     display() {
@@ -178,4 +172,5 @@ ipcRenderer.on("Reset_Font_Size", (e) => {
 })
 ipcRenderer.on("Toggle_Single_Page", (e) => {
     Book.toggleSinglePage()
+    e.sender.send("Toggle_Single_Page", Book.singlePage)
 })
