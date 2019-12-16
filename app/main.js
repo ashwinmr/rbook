@@ -172,6 +172,11 @@ app.on('ready', function createWindow() {
     ipcMain.on('Toggle_Single_Page', (e, state) => {
         menu.getMenuItemById('Force_Single_Page').checked = state
     })
+
+    // Handle toggle fullscreen
+    ipcMain.on('Toggle_Fullscreen', (e) => {
+        Toggle_Fullscreen(win)
+    })
 })
 
 // Quit when all windows are closed.

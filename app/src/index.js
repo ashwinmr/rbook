@@ -176,5 +176,20 @@ ipcRenderer.on("Reset_Font_Size", (e) => {
 })
 ipcRenderer.on("Toggle_Single_Page", (e) => {
     Book.toggleSinglePage()
-    e.sender.send("Toggle_Single_Page", Book.singlePage)
+    ipcRenderer.send("Toggle_Single_Page", Book.singlePage)
+})
+
+// Add button shortcuts
+document.getElementById('decrease_font_size').addEventListener('click', (e) => {
+    Book.incrementFontSize(-10)
+})
+document.getElementById('increase_font_size').addEventListener('click', (e) => {
+    Book.incrementFontSize(10)
+})
+document.getElementById('single_page').addEventListener('click', (e) => {
+    Book.toggleSinglePage()
+    ipcRenderer.send("Toggle_Single_Page", Book.singlePage)
+})
+document.getElementById('fullscreen').addEventListener('click', (e) => {
+    ipcRenderer.send('Toggle_Fullscreen')
 })
