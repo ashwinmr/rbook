@@ -67,6 +67,7 @@ class BookClass {
 
     display() {
         this.rendition = this.data.renderTo("book_cont");
+
         this.rendition.display().then(() => {
 
             // Store the 1st page location

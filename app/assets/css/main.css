@@ -1,18 +1,11 @@
 ﻿body {
-    /* Hide scroll bars */
-    overflow: hidden;
+    margin: 0;
 }
-
-#book_cont {}
 
 #control_bar {
     user-select: none;
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%);
-    white-space: nowrap;
-    z-index: 100;
+    width: 50%;
+    margin: auto;
 }
 
 .hover_show {
