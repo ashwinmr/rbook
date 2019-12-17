@@ -53,11 +53,12 @@ class BookClass {
         this.rendition = undefined
         this.singlePage = false
         this.fontSize = 100
+        this.generated = false
     }
 
     // Get current page in percent
     get currentPercent() {
-        if (this.rendition !== undefined) {
+        if (this.generated) {
             let currentLocation = this.rendition.currentLocation().start.cfi
             let currentPercent = this.data.locations.percentageFromCfi(currentLocation) * 100
             return currentPercent
@@ -66,11 +67,22 @@ class BookClass {
         }
     }
 
+    goTo(percent) {
+        if (!this.generated) {
+            return
+        }
+        let location = this.data.locations.cfiFromPercentage(percent / 100)
+        this.rendition.display(location)
+    }
+
     load(filePath) {
         this.data = ePub(filePath)
         this.data.ready.then(() => {
             // generate locations
-            this.data.locations.generate().then(() => {})
+            this.data.locations.generate().then(() => {
+                    this.generated = true;
+                    updateLocation(Book.currentPercent)
+                })
                 // Don't wait for generation to display
             this.display()
         })
@@ -155,7 +167,10 @@ class SliderClass {
             this.Elem.blur() // Prevent focus that takes keybaord input
         })
         this.Elem.addEventListener('input', () => {
-            Media.Seek_Percent(this.Elem.value)
+            if (!Book.generated) {
+                this.seek(0)
+            }
+            Book.goTo(this.Elem.value)
         })
     }
 
