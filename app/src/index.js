@@ -54,6 +54,40 @@ class BookClass {
         this.singlePage = false
         this.fontSize = 100
         this.generated = false
+        this.coverLocation = undefined
+    }
+
+    load(filePath) {
+        this.data = ePub(filePath)
+        this.data.ready.then(() => {
+            // Don't wait for generation to display
+            this.display()
+        })
+    }
+
+    display() {
+        this.rendition = this.data.renderTo("book_cont");
+        this.rendition.display().then(() => {
+
+            // Store the 1st page location
+            this.coverLocation = this.rendition.currentLocation().start.cfi
+
+            // generate locations
+            this.data.locations.generate().then(() => {
+                this.generated = true;
+                updateLocation(Book.currentPercent)
+            })
+
+            // Handle drag and drop of files on the iframe
+            document.getElementsByTagName('iframe')[0].contentWindow.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            })
+            document.getElementsByTagName('iframe')[0].contentWindow.addEventListener('drop', (e) => {
+                e.preventDefault();
+                let file_path = e.dataTransfer.files[0].path
+                File.open(file_path)
+            })
+        })
     }
 
     // Get current page in percent
@@ -71,22 +105,14 @@ class BookClass {
         if (!this.generated) {
             return
         }
-        let location = this.data.locations.cfiFromPercentage(percent / 100)
+        let location
+        if (percent == 0) {
+            location = this.coverLocation
+        } else {
+            location = this.data.locations.cfiFromPercentage(percent / 100)
+        }
         this.rendition.display(location)
         updateLocation(percent)
-    }
-
-    load(filePath) {
-        this.data = ePub(filePath)
-        this.data.ready.then(() => {
-            // generate locations
-            this.data.locations.generate().then(() => {
-                    this.generated = true;
-                    updateLocation(Book.currentPercent)
-                })
-                // Don't wait for generation to display
-            this.display()
-        })
     }
 
     setSinglePage(setVal) {
@@ -108,24 +134,6 @@ class BookClass {
         } else {
             this.setSinglePage(true)
         }
-    }
-
-    display() {
-        this.rendition = this.data.renderTo("book_cont");
-        this.rendition.display().then(() => {
-
-            // Handle drag and drop of files on the iframe
-            document.getElementsByTagName('iframe')[0].contentWindow.addEventListener('dragover', (e) => {
-                e.preventDefault();
-            })
-            document.getElementsByTagName('iframe')[0].contentWindow.addEventListener('drop', (e) => {
-                e.preventDefault();
-                let file_path = e.dataTransfer.files[0].path
-                File.open(file_path)
-            })
-
-            updateLocation(this.currentPercent)
-        })
     }
 
     nextPage() {
