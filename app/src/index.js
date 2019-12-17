@@ -5,8 +5,9 @@ const ePub = require('epubjs').default
 
 // Update page display
 function updateLocation(percent) {
-    total = 100
-    document.getElementById('location').textContent = percent + '/' + total
+    percent = Math.round(percent * 100) / 100;
+    document.getElementById('location').textContent = percent + '/100'
+    Slider.seek(percent)
 }
 
 // Create object to handle file
@@ -59,7 +60,7 @@ class BookClass {
         if (this.rendition !== undefined) {
             let currentLocation = this.rendition.currentLocation().start.cfi
             let currentPercent = this.data.locations.percentageFromCfi(currentLocation) * 100
-            return Math.round(currentPercent * 100) / 100;
+            return currentPercent
         } else {
             return 0
         }
@@ -144,6 +145,29 @@ class BookClass {
     }
 }
 var Book = new BookClass
+
+class SliderClass {
+
+    constructor() {
+        this.Elem = document.getElementById('slider')
+        this.seek(0)
+        this.Elem.addEventListener('focus', () => {
+            this.Elem.blur() // Prevent focus that takes keybaord input
+        })
+        this.Elem.addEventListener('input', () => {
+            Media.Seek_Percent(this.Elem.value)
+        })
+    }
+
+    seek(percent) {
+        // Limit val between 0 and 1
+        percent = percent < 0 ? 0 : percent > 100 ? 100 : percent
+        percent = Math.round(percent * 100) / 100
+        this.Elem.style.setProperty('background', 'linear-gradient(to right, red ' + percent + '%, black ' + percent + '%')
+        this.Elem.value = percent
+    }
+}
+var Slider = new SliderClass
 
 // Handle drag and drop on main window
 document.addEventListener('dragover', (e) => {

@@ -47,6 +47,42 @@ button:active {
 }
 
 
+/* Setup the slider */
+
+#slider {
+    -webkit-appearance: none;
+    height: 5px;
+    border-radius: 2px;
+    margin: 10px 0 10px 0;
+    background: linear-gradient(to right, red 0%, black 0%);
+    background-size: 200% 100%;
+    background-position: left bottom;
+    cursor: pointer;
+}
+
+#slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background: url(../ui/seek_button.svg);
+    filter: grayscale(100%) brightness(2.5);
+    cursor: pointer;
+}
+
+#slider::-webkit-slider-thumb:hover {
+    filter: grayscale(100%) brightness(3);
+}
+
+#slider::-webkit-slider-thumb:active {
+    filter: grayscale(100%) brightness(1);
+}
+
+#slider:focus {
+    outline: none;
+}
+
+
 /* Set image for each button */
 
 #decrease_font_size {
