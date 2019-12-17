@@ -73,6 +73,7 @@ class BookClass {
         }
         let location = this.data.locations.cfiFromPercentage(percent / 100)
         this.rendition.display(location)
+        updateLocation(percent)
     }
 
     load(filePath) {
