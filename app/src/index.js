@@ -55,6 +55,7 @@ class BookClass {
         this.fontSize = 100
         this.generated = false
         this.coverLocation = undefined
+        this.containerElem = document.getElementById('book_cont')
     }
 
     load(filePath) {
@@ -66,7 +67,10 @@ class BookClass {
     }
 
     display() {
-        this.rendition = this.data.renderTo("book_cont");
+        this.rendition = this.data.renderTo("book_cont", {
+            "width": this.containerElem.clientWidth,
+            "height": this.containerElem.clientHeight
+        });
 
         this.rendition.display().then(() => {
 
@@ -89,6 +93,13 @@ class BookClass {
                 File.open(file_path)
             })
         })
+    }
+
+    resize() {
+        if (this.rendition === undefined) {
+            return;
+        }
+        this.rendition.resize(this.containerElem.clientWidth, this.containerElem.clientHeight)
     }
 
     // Get current page in percent
@@ -193,6 +204,9 @@ class SliderClass {
     }
 }
 var Slider = new SliderClass
+
+// Handle resizing of window
+window.addEventListener('resize', (e) => { Book.resize() })
 
 // Handle drag and drop on main window
 document.addEventListener('dragover', (e) => {

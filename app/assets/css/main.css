@@ -4,8 +4,13 @@
 
 #control_bar {
     user-select: none;
+    height: 50px;
     width: 50%;
     margin: auto;
+}
+
+#book_cont {
+    height: calc(100vh - 50px);
 }
 
 .hover_show {
