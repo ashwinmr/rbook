@@ -90,7 +90,7 @@ class BookClass {
             // Store the epub elem
             this.epubElem = this.containerElem.childNodes[0]
                 // Start observing the target node for configured mutations
-            observer.observe(Book.epubElem, config)
+            observer.observe(Book.epubElem, { childList: true })
 
             // Store the 1st page location
             this.coverLocation = this.rendition.currentLocation().start.cfi
@@ -306,9 +306,6 @@ document.getElementById('previous_page_area').addEventListener('click', (e) => {
 document.getElementById('next_page_area').addEventListener('click', (e) => {
     Book.nextPage()
 })
-
-// Options for the observer (which mutations to observe)
-const config = { childList: true };
 
 // Callback function to execute when mutations are observed
 const callback = function(mutationsList, observer) {
