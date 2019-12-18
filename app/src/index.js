@@ -220,6 +220,27 @@ class SliderClass {
 }
 var Slider = new SliderClass
 
+class InteractionClass {
+    constructor() {
+        this.touchStart = undefined
+        this.touchEnd = undefined
+    }
+}
+var Interaction = new InteractionClass
+
+// Hangle swipe gesture
+document.addEventListener('touchstart', (e) => {
+    Interaction.touchStart = e.touches[0].clientX
+})
+document.addEventListener('touchmove', (e) => {
+    Interaction.touchEnd = e.touches[0].clientX
+})
+document.addEventListener('touchend', (e) => {
+    if (Interaction.touchStart > Interaction.touchEnd) {
+        Book.nextPage()
+    }
+})
+
 // Handle resizing of window
 window.addEventListener('resize', (e) => { Book.resize() })
 
