@@ -185,6 +185,7 @@ class SliderClass {
             if (!Book.generated) {
                 this.seek(0)
             }
+            console.log("intput val = " + this.Elem.value)
             Book.goTo(this.Elem.value)
         })
     }
@@ -291,11 +292,12 @@ document.getElementById('next_page_area').addEventListener('click', (e) => {
 })
 
 // Callback function to execute when mutations are observed
-function updateLocation() {
+function updateLocation(mutationsList, observer) {
     Book.rendition.reportLocation().then(() => {
         let currentLocation = Book.rendition.currentLocation().start.cfi
         let currentPercent = Book.data.locations.percentageFromCfi(currentLocation) * 100
         let percent = Math.round(currentPercent * 100) / 100;
+        console.log("current percent " + percent)
         document.getElementById('location').textContent = percent + '/100'
         Slider.seek(percent)
     })
