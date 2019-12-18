@@ -11,6 +11,17 @@ function updateLocation(percent) {
     Slider.seek(percent)
 }
 
+// Set Fullscreen
+function Set_Fullscreen(set_val) {
+    if (set_val) {
+        document.getElementById('control_bar').classList.add('hover_show')
+        document.getElementById('fullscreen').style.backgroundColor = "red"
+    } else {
+        document.getElementById('control_bar').classList.remove('hover_show')
+        document.getElementById('fullscreen').style.backgroundColor = "black"
+    }
+}
+
 // Create object to handle file
 class FileClass {
 
@@ -135,19 +146,19 @@ class BookClass {
         if (setVal) {
             this.rendition.spread("none")
             this.singlePage = true
+            document.getElementById('single_page').style.backgroundColor = "red"
         } else {
             this.rendition.spread("auto")
             this.singlePage = false
+            document.getElementById('single_page').style.backgroundColor = "black"
         }
     }
 
     toggleSinglePage() {
         if (this.singlePage) {
             this.setSinglePage(false)
-            document.getElementById('single_page').style.backgroundColor = "black"
         } else {
             this.setSinglePage(true)
-            document.getElementById('single_page').style.backgroundColor = "red"
         }
         ipcRenderer.send("Toggle_Single_Page", this.singlePage)
     }
@@ -248,6 +259,9 @@ ipcRenderer.on("Reset_Font_Size", (e) => {
 })
 ipcRenderer.on("Toggle_Single_Page", (e) => {
     Book.toggleSinglePage()
+})
+ipcRenderer.on('Set_Fullscreen', (e, set_val) => {
+    Set_Fullscreen(set_val)
 })
 
 // Add button shortcuts

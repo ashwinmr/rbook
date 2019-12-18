@@ -105,5 +105,6 @@ button:active {
 }
 
 #fullscreen {
-    background: url(../ui/fullscreen_btn.svg);
+    background-color: black;
+    -webkit-mask-image: url(../ui/fullscreen_btn.svg);
 }
