@@ -68,6 +68,7 @@ class BookClass {
         this.generated = false
         this.coverLocation = undefined
         this.containerElem = document.getElementById('book_cont')
+        this.epubElem = undefined
     }
 
     load(filePath) {
@@ -85,6 +86,11 @@ class BookClass {
         });
 
         this.rendition.display().then(() => {
+
+            // Store the epub elem
+            this.epubElem = this.containerElem.childNodes[0]
+                // Start observing the target node for configured mutations
+            observer.observe(Book.epubElem, config)
 
             // Store the 1st page location
             this.coverLocation = this.rendition.currentLocation().start.cfi
@@ -300,3 +306,16 @@ document.getElementById('previous_page_area').addEventListener('click', (e) => {
 document.getElementById('next_page_area').addEventListener('click', (e) => {
     Book.nextPage()
 })
+
+// Options for the observer (which mutations to observe)
+const config = { childList: true };
+
+// Callback function to execute when mutations are observed
+const callback = function(mutationsList, observer) {
+    let percent = Math.round(Book.currentPercent * 100) / 100;
+    document.getElementById('location').textContent = percent + '/100'
+    Slider.seek(percent)
+};
+
+// Create an observer instance linked to the callback function
+const observer = new MutationObserver(callback);
