@@ -94,16 +94,6 @@ class BookClass {
                 this.generated = true;
                 updateLocation(Book.currentPercent)
             })
-
-            // Handle drag and drop of files on the iframe
-            document.getElementsByTagName('iframe')[0].contentWindow.addEventListener('dragover', (e) => {
-                e.preventDefault();
-            })
-            document.getElementsByTagName('iframe')[0].contentWindow.addEventListener('drop', (e) => {
-                e.preventDefault();
-                let file_path = e.dataTransfer.files[0].path
-                File.open(file_path)
-            })
         })
     }
 
@@ -229,15 +219,21 @@ class InteractionClass {
 var Interaction = new InteractionClass
 
 // Hangle swipe gesture
+// Requires the iframe to be covered
 document.addEventListener('touchstart', (e) => {
     Interaction.touchStart = e.touches[0].clientX
+    Interaction.touchEnd = e.touches[0].clientX
 })
 document.addEventListener('touchmove', (e) => {
     Interaction.touchEnd = e.touches[0].clientX
 })
 document.addEventListener('touchend', (e) => {
-    if (Interaction.touchStart > Interaction.touchEnd) {
+    let minDist = 50
+    if (Interaction.touchStart > Interaction.touchEnd + minDist) {
         Book.nextPage()
+    }
+    if (Interaction.touchStart < Interaction.touchEnd - minDist) {
+        Book.previousPage()
     }
 })
 

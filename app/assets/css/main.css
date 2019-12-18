@@ -20,6 +20,13 @@
     justify-content: center;
 }
 
+#iframe_cover {
+    height: calc(100vh - 50px);
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
 #book_cont {
     height: calc(100vh - 50px);
 }
