@@ -294,3 +294,9 @@ document.getElementById('single_page').addEventListener('click', (e) => {
 document.getElementById('fullscreen').addEventListener('click', (e) => {
     ipcRenderer.send('Toggle_Fullscreen')
 })
+document.getElementById('previous_page_area').addEventListener('click', (e) => {
+    Book.previousPage()
+})
+document.getElementById('next_page_area').addEventListener('click', (e) => {
+    Book.nextPage()
+})

@@ -27,6 +27,18 @@
     z-index: 1;
 }
 
+#previous_page_area {
+    width: 25%;
+    height: 100%;
+    float: left;
+}
+
+#next_page_area {
+    width: 25%;
+    height: 100%;
+    float: right;
+}
+
 #book_cont {
     height: calc(100vh - 50px);
 }
