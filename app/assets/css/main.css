@@ -59,7 +59,7 @@ button:active {
 /* Setup the slider */
 
 #slider {
-    width: 50%;
+    width: 40%;
     -webkit-appearance: none;
     height: 5px;
     border-radius: 2px;
