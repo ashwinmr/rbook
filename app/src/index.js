@@ -2,6 +2,7 @@
 const path = require('path')
 const url = require('url')
 const ePub = require('epubjs').default
+const mousetrap = require('mousetrap') // Can't be used in node. Only in browser
 
 // Update page display
 function updateLocation(percent) {
@@ -219,6 +220,11 @@ document.addEventListener('drop', (e) => {
     e.preventDefault();
     let file_path = e.dataTransfer.files[0].path
     File.open(file_path)
+})
+
+// Add keyboard shortcuts 
+mousetrap.bind('ctrl+=', () => {
+    Book.incrementFontSize(10)
 })
 
 // Handle main process events

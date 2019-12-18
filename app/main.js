@@ -102,12 +102,12 @@ app.on('ready', function createWindow() {
             submenu: [{
                     label: 'Increase Font Size',
                     click() { win.webContents.send('Increase_Font_Size') },
-                    accelerator: 'Ctrl+Up'
+                    accelerator: 'Ctrl+Plus'
                 },
                 {
                     label: 'Decrease Font Size',
                     click() { win.webContents.send('Decrease_Font_Size') },
-                    accelerator: 'Ctrl+Down'
+                    accelerator: 'Ctrl+-'
                 },
                 {
                     label: 'Reset Font Size',
