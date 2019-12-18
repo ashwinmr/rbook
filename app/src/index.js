@@ -228,7 +228,7 @@ document.addEventListener('touchmove', (e) => {
     Interaction.touchEnd = e.touches[0].clientX
 })
 document.addEventListener('touchend', (e) => {
-    let minDist = 50
+    let minDist = 25
     if (Interaction.touchStart > Interaction.touchEnd + minDist) {
         Book.nextPage()
     }
