@@ -143,9 +143,12 @@ class BookClass {
     toggleSinglePage() {
         if (this.singlePage) {
             this.setSinglePage(false)
+            document.getElementById('single_page').style.backgroundColor = "black"
         } else {
             this.setSinglePage(true)
+            document.getElementById('single_page').style.backgroundColor = "red"
         }
+        ipcRenderer.send("Toggle_Single_Page", this.singlePage)
     }
 
     nextPage() {
@@ -239,7 +242,6 @@ ipcRenderer.on("Reset_Font_Size", (e) => {
 })
 ipcRenderer.on("Toggle_Single_Page", (e) => {
     Book.toggleSinglePage()
-    ipcRenderer.send("Toggle_Single_Page", Book.singlePage)
 })
 
 // Add button shortcuts
@@ -251,7 +253,6 @@ document.getElementById('increase_font_size').addEventListener('click', (e) => {
 })
 document.getElementById('single_page').addEventListener('click', (e) => {
     Book.toggleSinglePage()
-    ipcRenderer.send("Toggle_Single_Page", Book.singlePage)
 })
 document.getElementById('fullscreen').addEventListener('click', (e) => {
     ipcRenderer.send('Toggle_Fullscreen')

@@ -47,10 +47,6 @@ button {
     margin: 5px 15px 5px 15px;
 }
 
-button:hover {
-    filter: brightness(0.6);
-}
-
 button:active {
     filter: brightness(0.2);
 }
@@ -104,7 +100,8 @@ button:active {
 }
 
 #single_page {
-    background: url(../ui/single_page_btn.svg);
+    background-color: black;
+    -webkit-mask-image: url(../ui/single_page_btn.svg);
 }
 
 #fullscreen {
