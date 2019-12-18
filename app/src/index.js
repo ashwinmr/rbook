@@ -113,8 +113,9 @@ class BookClass {
         } else {
             location = this.data.locations.cfiFromPercentage(percent / 100)
         }
-        this.rendition.display(location)
-        updateLocation()
+        this.rendition.display(location).then(() => {
+            updateLocation()
+        })
     }
 
     setSinglePage(setVal) {
