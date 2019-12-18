@@ -4,13 +4,6 @@ const url = require('url')
 const ePub = require('epubjs').default
 const mousetrap = require('mousetrap') // Can't be used in node. Only in browser
 
-// Update page display
-function updateLocation(percent) {
-    percent = Math.round(percent * 100) / 100;
-    document.getElementById('location').textContent = percent + '/100'
-    Slider.seek(percent)
-}
-
 // Set Fullscreen
 function Set_Fullscreen(set_val) {
     if (set_val) {
@@ -98,7 +91,7 @@ class BookClass {
             // generate locations
             this.data.locations.generate().then(() => {
                 this.generated = true;
-                updateLocation(Book.currentPercent)
+                console.log('generated')
             })
         })
     }
@@ -108,17 +101,6 @@ class BookClass {
             return;
         }
         this.rendition.resize(this.containerElem.clientWidth, this.containerElem.clientHeight)
-    }
-
-    // Get current page in percent
-    get currentPercent() {
-        if (this.generated) {
-            let currentLocation = this.rendition.currentLocation().start.cfi
-            let currentPercent = this.data.locations.percentageFromCfi(currentLocation) * 100
-            return currentPercent
-        } else {
-            return 0
-        }
     }
 
     goTo(percent) {
@@ -132,7 +114,7 @@ class BookClass {
             location = this.data.locations.cfiFromPercentage(percent / 100)
         }
         this.rendition.display(location)
-        updateLocation(percent)
+        updateLocation()
     }
 
     setSinglePage(setVal) {
@@ -162,7 +144,7 @@ class BookClass {
     nextPage() {
         if (this.rendition !== undefined) {
             this.rendition.next().then(() => {
-                updateLocation(this.currentPercent)
+                updateLocation()
             })
         }
     }
@@ -170,7 +152,7 @@ class BookClass {
     previousPage() {
         if (this.rendition !== undefined) {
             this.rendition.prev().then(() => {
-                updateLocation(this.currentPercent)
+                updateLocation()
             })
         }
     }
@@ -308,11 +290,15 @@ document.getElementById('next_page_area').addEventListener('click', (e) => {
 })
 
 // Callback function to execute when mutations are observed
-const callback = function(mutationsList, observer) {
-    let percent = Math.round(Book.currentPercent * 100) / 100;
-    document.getElementById('location').textContent = percent + '/100'
-    Slider.seek(percent)
+function updateLocation() {
+    Book.rendition.reportLocation().then(() => {
+        let currentLocation = Book.rendition.currentLocation().start.cfi
+        let currentPercent = Book.data.locations.percentageFromCfi(currentLocation) * 100
+        let percent = Math.round(currentPercent * 100) / 100;
+        document.getElementById('location').textContent = percent + '/100'
+        Slider.seek(percent)
+    })
 };
 
 // Create an observer instance linked to the callback function
-const observer = new MutationObserver(callback);
+const observer = new MutationObserver(updateLocation);
