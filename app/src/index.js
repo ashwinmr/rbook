@@ -177,6 +177,9 @@ class BookClass {
     }
 
     incrementFontSize(increment) {
+        if (this.rendition === undefined) {
+            return
+        }
         this.fontSize += increment
         if (this.fontSize < 1) {
             this.fontSize = 1;
@@ -185,6 +188,9 @@ class BookClass {
     }
 
     resetFontSize() {
+        if (this.rendition === undefined) {
+            return
+        }
         this.fontSize = 100
         this.rendition.themes.fontSize(this.fontSize + "%")
     }
