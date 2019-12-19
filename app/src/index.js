@@ -113,9 +113,8 @@ class BookClass {
         } else {
             location = this.data.locations.cfiFromPercentage(percent / 100)
         }
-        this.rendition.display(location).then(() => {
-            updateLocation()
-        })
+        updateLocationFromPercent(percent)
+        this.rendition.display(location).then(() => {})
     }
 
     setSinglePage(setVal) {
@@ -185,7 +184,6 @@ class SliderClass {
             if (!Book.generated) {
                 this.seek(0)
             }
-            console.log("intput val = " + this.Elem.value)
             Book.goTo(this.Elem.value)
         })
     }
@@ -291,15 +289,19 @@ document.getElementById('next_page_area').addEventListener('click', (e) => {
     Book.nextPage()
 })
 
+// Update location using percent
+function updateLocationFromPercent(percent) {
+    percent = Math.round(percent * 100) / 100;
+    document.getElementById('location').textContent = percent + '/100'
+    Slider.seek(percent)
+}
+
 // Callback function to execute when mutations are observed
 function updateLocation(mutationsList, observer) {
     Book.rendition.reportLocation().then(() => {
         let currentLocation = Book.rendition.currentLocation().start.cfi
         let currentPercent = Book.data.locations.percentageFromCfi(currentLocation) * 100
-        let percent = Math.round(currentPercent * 100) / 100;
-        console.log("current percent " + percent)
-        document.getElementById('location').textContent = percent + '/100'
-        Slider.seek(percent)
+        updateLocationFromPercent(currentPercent)
     })
 };
 
