@@ -104,6 +104,7 @@ class BookClass {
     }
 
     updateLocation() {
+        // Not preventing location update causes slider jump
         if (this.preventNextLocationUpdate) {
             this.preventNextLocationUpdate = false
             return
