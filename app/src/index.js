@@ -88,31 +88,25 @@ class BookClass {
 
         this.rendition.display().then(() => {
 
-            // Store the epub elem
-            this.epubElem = this.containerElem.childNodes[0]
-                // Start observing the target node for configured mutations
-            Observer.observe(Book.epubElem, { childList: true })
-
             // Store the 1st page location
             this.coverLocation = this.rendition.currentLocation().start.cfi
 
             // generate locations
             this.data.locations.generate().then(() => {
                 this.generated = true;
-            })
-        })
-    }
 
-    updateLocation() {
-        // Not preventing location update causes slider jump
-        if (this.preventNextLocationUpdate) {
-            this.preventNextLocationUpdate = false
-            return
-        }
-        this.rendition.reportLocation().then(() => {
-            let currentLocation = this.rendition.currentLocation().start.cfi
-            let currentPercent = this.data.locations.percentageFromCfi(currentLocation) * 100
-            updateLocationPercent(currentPercent)
+                // Handle location change
+                this.rendition.on('relocated', () => {
+                    // Prevent sldier jump
+                    if (this.preventNextLocationUpdate) {
+                        this.preventNextLocationUpdate = false
+                        return
+                    }
+                    let currentLocation = this.rendition.currentLocation().start.cfi
+                    let currentPercent = this.data.locations.percentageFromCfi(currentLocation) * 100
+                    updateLocationPercent(currentPercent)
+                })
+            })
         })
     }
 
@@ -163,17 +157,13 @@ class BookClass {
 
     nextPage() {
         if (this.rendition !== undefined) {
-            this.rendition.next().then(() => {
-                this.updateLocation()
-            })
+            this.rendition.next()
         }
     }
 
     previousPage() {
         if (this.rendition !== undefined) {
-            this.rendition.prev().then(() => {
-                this.updateLocation()
-            })
+            this.rendition.prev()
         }
     }
 
@@ -314,6 +304,3 @@ document.getElementById('previous_page_area').addEventListener('click', (e) => {
 document.getElementById('next_page_area').addEventListener('click', (e) => {
     Book.nextPage()
 })
-
-// Create an observer instance linked to the callback function
-const Observer = new MutationObserver(() => { Book.updateLocation });
