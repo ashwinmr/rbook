@@ -20,27 +20,24 @@
     justify-content: center;
 }
 
-#iframe_cover {
+#book_area {
     height: calc(100vh - 50px);
-    position: absolute;
-    width: 100%;
-    /* z-index: 1; */
+    display: flex;
+    justify-content: center;
 }
 
 #previous_page_area {
-    width: 15%;
+    width: 5%;
     height: 100%;
-    float: left;
 }
 
 #next_page_area {
-    width: 15%;
+    width: 5%;
     height: 100%;
-    float: right;
 }
 
 #book_cont {
-    height: calc(100vh - 50px);
+    width: 100%
 }
 
 .hover_show {
