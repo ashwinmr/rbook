@@ -68,8 +68,8 @@ class BookClass {
         this.generated = false
         this.coverLocation = undefined
         this.containerElem = document.getElementById('book_cont')
-        this.epubElem = undefined
         this.preventNextLocationUpdate = false
+        this.iframeElem = undefined
     }
 
     load(filePath) {
@@ -78,6 +78,15 @@ class BookClass {
             // Don't wait for generation to display
             this.display()
         })
+    }
+
+    get currentPercent() {
+        if (!this.generated) {
+            return 0
+        }
+        let currentLocation = this.rendition.currentLocation().start.cfi
+        let currentPercent = this.data.locations.percentageFromCfi(currentLocation) * 100
+        return currentPercent
     }
 
     display() {
@@ -91,21 +100,31 @@ class BookClass {
             // Store the 1st page location
             this.coverLocation = this.rendition.currentLocation().start.cfi
 
+            // Handle location change
+            this.rendition.on('relocated', () => {
+                // Prevent slider jump
+                if (this.preventNextLocationUpdate) {
+                    this.preventNextLocationUpdate = false
+                } else {
+                    updateLocationPercent(this.currentPercent)
+                }
+
+                let iframeElem = document.getElementsByTagName('iframe')[0].contentWindow
+
+                // Handle drag and drop on iframe
+                iframeElem.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                })
+                iframeElem.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    let file_path = e.dataTransfer.files[0].path
+                    File.open(file_path)
+                })
+            })
+
             // generate locations
             this.data.locations.generate().then(() => {
                 this.generated = true;
-
-                // Handle location change
-                this.rendition.on('relocated', () => {
-                    // Prevent sldier jump
-                    if (this.preventNextLocationUpdate) {
-                        this.preventNextLocationUpdate = false
-                        return
-                    }
-                    let currentLocation = this.rendition.currentLocation().start.cfi
-                    let currentPercent = this.data.locations.percentageFromCfi(currentLocation) * 100
-                    updateLocationPercent(currentPercent)
-                })
             })
         })
     }
