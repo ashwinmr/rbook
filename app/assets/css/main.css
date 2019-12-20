@@ -73,6 +73,9 @@ button {
     user-select: inherit;
     background-position: center;
     background-repeat: no-repeat;
+    background-color: initial;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
     cursor: pointer;
     border: none;
     outline: none;
@@ -126,11 +129,11 @@ button:active {
 /* Set image for each button */
 
 #decrease_font_size {
-    background: url(../ui/decrease_font_size_btn.svg);
+    background-image: url(../ui/decrease_font_size_btn.svg);
 }
 
 #increase_font_size {
-    background: url(../ui/increase_font_size_btn.svg);
+    background-image: url(../ui/increase_font_size_btn.svg);
 }
 
 #single_page {
