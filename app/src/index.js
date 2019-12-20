@@ -90,6 +90,12 @@ class BookClass {
     }
 
     addListenersToIframe(iframeElem) {
+
+        // Add moustrap support
+        mousetrap(iframeElem).bind('ctrl+=', () => {
+            Book.incrementFontSize(10)
+        })
+
         // Handle drag and drop on iframe
         iframeElem.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -139,7 +145,7 @@ class BookClass {
                     updateLocationPercent(this.currentPercent)
                 }
 
-                let iframeElem = document.getElementsByTagName('iframe')[0].contentWindow
+                let iframeElem = document.getElementsByTagName('iframe')[0].contentDocument
                 if (iframeElem != this.iframeElem) {
                     this.addListenersToIframe(iframeElem)
                     this.iframeElem = iframeElem
