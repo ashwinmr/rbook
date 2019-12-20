@@ -15,9 +15,13 @@ function updateLocationPercent(percent) {
 function Set_Fullscreen(set_val) {
     if (set_val) {
         document.getElementById('control_bar').classList.add('hover_show')
+        document.getElementById('previous_page_area').classList.add('hide')
+        document.getElementById('next_page_area').classList.add('hide')
         document.getElementById('fullscreen').style.backgroundColor = "red"
     } else {
         document.getElementById('control_bar').classList.remove('hover_show')
+        document.getElementById('previous_page_area').classList.remove('hide')
+        document.getElementById('next_page_area').classList.remove('hide')
         document.getElementById('fullscreen').style.backgroundColor = "black"
     }
 }
