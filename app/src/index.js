@@ -44,7 +44,7 @@ class FileClass {
 
     // Open file and store data
     open(filePath) {
-        if (filePath === undefined) {
+        if (!filePath) {
             return
         }
         this.opened = true
@@ -69,6 +69,7 @@ class BookClass {
         this.rendition = undefined
         this.singlePage = false
         this.fontSize = 100
+        this.lastLocation = undefined
         this.generated = false
         this.coverLocation = undefined
         this.containerElem = document.getElementById('book_cont')
@@ -78,9 +79,38 @@ class BookClass {
 
     load(filePath) {
         this.data = ePub(filePath)
+
         this.data.ready.then(() => {
+            this.loadStorage()
             this.display()
         })
+    }
+
+    saveStorage() {
+        let fontSize = this.fontSize
+        let lastLocation = this.rendition.currentLocation().start.cfi
+        let key = `${this.data.key()}:storage`
+        let storage = {
+            "fontSize": fontSize,
+            "lastLocation": lastLocation
+        }
+        localStorage.setItem(key, JSON.stringify(storage))
+    }
+
+    loadStorage() {
+        let key = `${this.data.key()}:storage`
+        let storage = JSON.parse(localStorage.getItem(key))
+
+        if (!storage) {
+            return
+        }
+
+        if (storage.fontSize !== undefined) {
+            this.fontSize = storage.fontSize
+        }
+        if (storage.lastLocation !== undefined) {
+            this.lastLocation = storage.lastLocation
+        }
     }
 
     get currentPercent() {
@@ -135,15 +165,17 @@ class BookClass {
         });
 
         // Get the last location
-        let lastLocation = this.loadLastLocation()
         let promise
-        if (lastLocation === undefined) {
+        if (this.lastLocation === undefined) {
             promise = this.rendition.display()
         } else {
-            promise = this.rendition.display(lastLocation)
+            promise = this.rendition.display(this.lastLocation)
         }
 
         promise.then(() => {
+
+            // Set fontsize
+            this.setFontSize(this.fontSize)
 
             // Store the cover location
             this.coverLocation = `epubcfi(${this.data.spine.items[0].cfiBase}!/4/1:0)`
@@ -151,7 +183,10 @@ class BookClass {
             // Handle location change
             this.rendition.on('relocated', () => {
                 // Save as last location
-                this.saveLastLocation(this.rendition.currentLocation().start.cfi)
+                this.lastLocation = this.rendition.currentLocation().start.cfi
+
+                // Save storage
+                this.saveStorage()
 
                 // Prevent slider jump
                 if (this.preventNextLocationUpdate) {
@@ -234,37 +269,27 @@ class BookClass {
     }
 
     incrementFontSize(increment) {
+        let fontSize = this.fontSize
+        fontSize += increment
+        if (fontSize < 1) {
+            fontSize = 1;
+        }
+        this.setFontSize(fontSize)
+    }
+
+    setFontSize(fontSize) {
         if (this.rendition === undefined) {
             return
         }
-        this.fontSize += increment
-        if (this.fontSize < 1) {
-            this.fontSize = 1;
-        }
-        this.rendition.themes.fontSize(this.fontSize + "%")
+        this.rendition.themes.fontSize(fontSize + "%")
+        this.fontSize = fontSize
+
+        // Save storage
+        this.saveStorage()
     }
 
     resetFontSize() {
-        if (this.rendition === undefined) {
-            return
-        }
-        this.fontSize = 100
-        this.rendition.themes.fontSize(this.fontSize + "%")
-    }
-
-    saveLastLocation(location) {
-        let key = `${this.data.key()}:lastLocation`
-        localStorage.setItem(key, location)
-    }
-
-    loadLastLocation() {
-        let key = `${this.data.key()}:lastLocation`
-        let lastLocation = localStorage.getItem(key)
-        if (lastLocation) {
-            return lastLocation
-        } else {
-            return undefined
-        }
+        this.setFontSize(100)
     }
 }
 var Book = new BookClass
