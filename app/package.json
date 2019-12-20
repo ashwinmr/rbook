@@ -1,7 +1,7 @@
 {
     "name": "rbook",
     "version": "1.0.0",
-    "description": "Description",
+    "description": "A simple epub reader",
     "repository": {},
     "main": "main.js",
     "scripts": {
