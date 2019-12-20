@@ -79,7 +79,6 @@ class BookClass {
     load(filePath) {
         this.data = ePub(filePath)
         this.data.ready.then(() => {
-            // Don't wait for generation to display
             this.display()
         })
     }
@@ -135,13 +134,25 @@ class BookClass {
             "height": this.containerElem.clientHeight
         });
 
-        this.rendition.display().then(() => {
+        // Get the last location
+        let lastLocation = this.loadLastLocation()
+        let promise
+        if (lastLocation === undefined) {
+            promise = this.rendition.display()
+        } else {
+            promise = this.rendition.display(lastLocation)
+        }
+
+        promise.then(() => {
 
             // Store the 1st page location
             this.coverLocation = this.rendition.currentLocation().start.cfi
 
             // Handle location change
             this.rendition.on('relocated', () => {
+                // Save as last location
+                this.saveLastLocation(this.rendition.currentLocation().start.cfi)
+
                 // Prevent slider jump
                 if (this.preventNextLocationUpdate) {
                     this.preventNextLocationUpdate = false
@@ -239,6 +250,21 @@ class BookClass {
         }
         this.fontSize = 100
         this.rendition.themes.fontSize(this.fontSize + "%")
+    }
+
+    saveLastLocation(location) {
+        let key = `${this.data.key()}:lastLocation`
+        localStorage.setItem(key, location)
+    }
+
+    loadLastLocation() {
+        let key = `${this.data.key()}:lastLocation`
+        let lastLocation = localStorage.getItem(key)
+        if (lastLocation) {
+            return lastLocation
+        } else {
+            return undefined
+        }
     }
 }
 var Book = new BookClass
