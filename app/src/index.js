@@ -89,6 +89,36 @@ class BookClass {
         return currentPercent
     }
 
+    addListenersToIframe(iframeElem) {
+        // Handle drag and drop on iframe
+        iframeElem.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        })
+        iframeElem.addEventListener('drop', (e) => {
+            e.preventDefault();
+            let file_path = e.dataTransfer.files[0].path
+            File.open(file_path)
+        })
+
+        // Hangle swipe gesture on iframe
+        iframeElem.addEventListener('touchstart', (e) => {
+            Interaction.touchStart = e.touches[0].clientX
+            Interaction.touchEnd = e.touches[0].clientX
+        })
+        iframeElem.addEventListener('touchmove', (e) => {
+            Interaction.touchEnd = e.touches[0].clientX
+        })
+        iframeElem.addEventListener('touchend', (e) => {
+            let minDist = 25
+            if (Interaction.touchStart > Interaction.touchEnd + minDist) {
+                Book.nextPage()
+            }
+            if (Interaction.touchStart < Interaction.touchEnd - minDist) {
+                Book.previousPage()
+            }
+        })
+    }
+
     display() {
         this.rendition = this.data.renderTo("book_cont", {
             "width": this.containerElem.clientWidth,
@@ -110,16 +140,11 @@ class BookClass {
                 }
 
                 let iframeElem = document.getElementsByTagName('iframe')[0].contentWindow
+                if (iframeElem != this.iframeElem) {
+                    this.addListenersToIframe(iframeElem)
+                    this.iframeElem = iframeElem
+                }
 
-                // Handle drag and drop on iframe
-                iframeElem.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                })
-                iframeElem.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    let file_path = e.dataTransfer.files[0].path
-                    File.open(file_path)
-                })
             })
 
             // generate locations
@@ -240,25 +265,6 @@ class InteractionClass {
     }
 }
 var Interaction = new InteractionClass
-
-// Hangle swipe gesture
-// Requires the iframe to be covered
-document.addEventListener('touchstart', (e) => {
-    Interaction.touchStart = e.touches[0].clientX
-    Interaction.touchEnd = e.touches[0].clientX
-})
-document.addEventListener('touchmove', (e) => {
-    Interaction.touchEnd = e.touches[0].clientX
-})
-document.addEventListener('touchend', (e) => {
-    let minDist = 25
-    if (Interaction.touchStart > Interaction.touchEnd + minDist) {
-        Book.nextPage()
-    }
-    if (Interaction.touchStart < Interaction.touchEnd - minDist) {
-        Book.previousPage()
-    }
-})
 
 // Handle resizing of window
 window.addEventListener('resize', (e) => { Book.resize() })
