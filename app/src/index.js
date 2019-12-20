@@ -145,8 +145,8 @@ class BookClass {
 
         promise.then(() => {
 
-            // Store the 1st page location
-            this.coverLocation = this.rendition.currentLocation().start.cfi
+            // Store the cover location
+            this.coverLocation = `epubcfi(${this.data.spine.items[0].cfiBase}!/4/1:0)`
 
             // Handle location change
             this.rendition.on('relocated', () => {
