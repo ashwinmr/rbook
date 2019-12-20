@@ -24,7 +24,10 @@
         "win": {
             "target": "appx",
             "certificateFile": "build_resources/selfsigncert.pfx",
-            "certificatePassword": "password"
+            "certificatePassword": "password",
+            "fileAssociations": [{
+                "ext": ["epub"]
+            }]
         },
         "linux": {
             "category": ""
