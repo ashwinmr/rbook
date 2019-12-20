@@ -150,6 +150,7 @@ class BookClass {
             // generate locations
             this.data.locations.generate().then(() => {
                 this.generated = true;
+                updateLocationPercent(this.currentPercent)
             })
         })
     }
