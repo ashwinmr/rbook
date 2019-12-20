@@ -8,7 +8,7 @@
   </defs>
   <title>prev_page_btn</title>
   <g>
-    <rect class="cls-1" y="-0.37" width="100" height="100"/>
-    <polygon points="41.17 49.63 58.83 88.9 58.83 10.35 41.17 49.63"/>
+    <rect class="cls-1" width="100" height="100" transform="translate(100 100) rotate(-180)"/>
+    <polygon points="41.28 50 51.9 69.67 51.9 30.33 41.28 50"/>
   </g>
 </svg>
