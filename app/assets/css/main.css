@@ -131,6 +131,10 @@ button:active {
 
 /* Set image for each button */
 
+#back {
+    background-image: url(../ui/back_btn.svg);
+}
+
 #decrease_font_size {
     background-image: url(../ui/decrease_font_size_btn.svg);
 }
