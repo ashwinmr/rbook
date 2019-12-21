@@ -165,7 +165,7 @@ app.on('ready', function createWindow() {
         }
 
         // Show and maximize
-        win.show()
+        win.maximize()
     })
 
     // Handle toggle single page response
