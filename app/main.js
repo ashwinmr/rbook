@@ -105,19 +105,23 @@ app.on('ready', function createWindow() {
             label: 'Appearance',
             // View options
             submenu: [{
-                    label: 'Increase Font Size',
-                    click() { win.webContents.send('Increase_Font_Size') },
-                    accelerator: 'Ctrl+Plus'
-                },
-                {
-                    label: 'Decrease Font Size',
-                    click() { win.webContents.send('Decrease_Font_Size') },
-                    accelerator: 'Ctrl+-'
-                },
-                {
-                    label: 'Reset Font Size',
-                    click() { win.webContents.send('Reset_Font_Size') },
-                    accelerator: 'Ctrl+R'
+                    label: 'Font Size',
+                    submenu: [{
+                            label: 'Increase',
+                            click() { win.webContents.send('Increase_Font_Size') },
+                            accelerator: 'Ctrl+Plus'
+                        },
+                        {
+                            label: 'Decrease',
+                            click() { win.webContents.send('Decrease_Font_Size') },
+                            accelerator: 'Ctrl+-'
+                        },
+                        {
+                            label: 'Reset',
+                            click() { win.webContents.send('Reset_Font_Size') },
+                            accelerator: 'Ctrl+R'
+                        },
+                    ]
                 },
                 {
                     label: 'Theme',
