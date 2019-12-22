@@ -30,11 +30,11 @@ function Set_Fullscreen(set_val) {
 class HistoryClass {
     constructor() {
         this.data = []
-        this.size = 10
+        this.maxLength = 10
     }
 
     add(location) {
-        if (this.data.size >= this.size) {
+        if (this.data.length >= this.maxLength) {
             this.data.shift()
         }
         this.data.push(location)
@@ -46,6 +46,10 @@ class HistoryClass {
 
     getLast() {
         return this.data[this.data.length - 1]
+    }
+
+    getLength() {
+        return this.data.length
     }
 }
 History = new HistoryClass
@@ -260,7 +264,9 @@ class BookClass {
         if (this.rendition === undefined) {
             return
         }
-        History.back()
+        if (History.getLength() > 1) {
+            History.back()
+        }
         let temp = History.getLast()
         History.back() // When displayed, the new page will be added again
         this.rendition.display(temp)
