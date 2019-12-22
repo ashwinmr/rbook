@@ -26,23 +26,39 @@ function Set_Fullscreen(set_val) {
     }
 }
 
-// Set Theme
-function setTheme(theme) {
-    // Reset
-    document.getElementById("body").style.backgroundColor = "initial"
-    document.getElementById("next_page_area").style.backgroundColor = "black"
-    document.getElementById("previous_page_area").style.backgroundColor = "black"
-    Book.rendition.themes.override("color", "black")
+class SettingsClass {
+    constructor() {
+        this.theme = "Light"
+    }
 
-    if (theme === "Dark") {
-        document.getElementById("body").style.backgroundColor = "black"
-        document.getElementById("next_page_area").style.backgroundColor = "white"
-        document.getElementById("previous_page_area").style.backgroundColor = "white"
-        Book.rendition.themes.override("color", "white")
-    } else if (theme === "Sepia") {
-        document.getElementById("body").style.backgroundColor = "wheat"
+    setTheme(theme) {
+        this.theme = theme
+    }
+
+    updateTheme() {
+        // Reset
+        document.getElementById("body").style.backgroundColor = "initial"
+        document.getElementById("next_page_area").style.backgroundColor = "black"
+        document.getElementById("previous_page_area").style.backgroundColor = "black"
+        if (Book.rendition !== undefined) {
+            Book.rendition.themes.override("color", "black")
+        }
+
+        if (this.theme === "Dark") {
+            document.getElementById("body").style.backgroundColor = "black"
+            document.getElementById("next_page_area").style.backgroundColor = "white"
+            document.getElementById("previous_page_area").style.backgroundColor = "white"
+            if (Book.rendition !== undefined) {
+                Book.rendition.themes.override("color", "white")
+            }
+        } else if (this.theme === "Sepia") {
+            document.getElementById("body").style.backgroundColor = "wheat"
+        } else {
+            this.setTheme("Light")
+        }
     }
 }
+Settings = new SettingsClass
 
 // Class for storing location history
 class HistoryClass {
@@ -222,6 +238,9 @@ class BookClass {
 
             // Set fontsize
             this.setFontSize(this.fontSize)
+
+            // Update theme
+            Settings.updateTheme()
 
             // Handle location change
             this.rendition.on('relocated', () => {
@@ -433,7 +452,8 @@ ipcRenderer.on('Set_Fullscreen', (e, set_val) => {
     Set_Fullscreen(set_val)
 })
 ipcRenderer.on('Set_Theme', (e, theme) => {
-    setTheme(theme)
+    Settings.setTheme(theme)
+    Settings.updateTheme()
 })
 
 
