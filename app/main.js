@@ -102,7 +102,7 @@ app.on('ready', function createWindow() {
             ]
         },
         {
-            label: 'View',
+            label: 'Appearance',
             // View options
             submenu: [{
                     label: 'Increase Font Size',
@@ -118,6 +118,26 @@ app.on('ready', function createWindow() {
                     label: 'Reset Font Size',
                     click() { win.webContents.send('Reset_Font_Size') },
                     accelerator: 'Ctrl+R'
+                },
+                {
+                    label: 'Theme',
+                    // Theme options
+                    submenu: [{
+                            label: 'Light',
+                            click() { win.webContents.send('Theme_Light') },
+                            type: "radio",
+                        },
+                        {
+                            label: 'Dark',
+                            click() { win.webContents.send('Theme_Dark') },
+                            type: "radio",
+                        },
+                        {
+                            label: 'Sepia',
+                            click() { win.webContents.send('Theme_Sepia') },
+                            type: "radio",
+                        },
+                    ]
                 },
                 {
                     label: 'Force Single Page',
