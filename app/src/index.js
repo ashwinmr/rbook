@@ -31,11 +31,31 @@ class SettingsClass {
         this.theme = "Light"
     }
 
+    save() {
+        let key = `settings`
+        let theme = this.theme
+        let settings = {
+            "theme": theme
+        }
+        localStorage.setItem(key, JSON.stringify(settings))
+    }
+
+    load() {
+        let key = `settings`
+        let settings = JSON.parse(localStorage.getItem(key))
+        if (settings) {
+            if (settings.theme !== undefined) {
+                this.theme = settings.theme
+            }
+        }
+        this.update()
+    }
+
     setTheme(theme) {
         this.theme = theme
     }
 
-    updateTheme() {
+    update() {
         // Reset
         document.getElementById("body").style.backgroundColor = "initial"
         document.getElementById("next_page_area").style.backgroundColor = "black"
@@ -56,6 +76,8 @@ class SettingsClass {
         } else {
             this.setTheme("Light")
         }
+
+        this.save()
     }
 }
 Settings = new SettingsClass
@@ -240,7 +262,7 @@ class BookClass {
             this.setFontSize(this.fontSize)
 
             // Update theme
-            Settings.updateTheme()
+            Settings.update()
 
             // Handle location change
             this.rendition.on('relocated', () => {
@@ -252,6 +274,7 @@ class BookClass {
 
                 // Save storage
                 this.saveStorage()
+                Settings.save()
 
                 // Prevent slider jump
                 if (this.preventNextLocationUpdate) {
@@ -405,6 +428,9 @@ class InteractionClass {
 }
 var Interaction = new InteractionClass
 
+// Load settings
+Settings.load()
+
 // Handle resizing of window
 window.addEventListener('resize', (e) => { Book.resize() })
 
@@ -453,7 +479,7 @@ ipcRenderer.on('Set_Fullscreen', (e, set_val) => {
 })
 ipcRenderer.on('Set_Theme', (e, theme) => {
     Settings.setTheme(theme)
-    Settings.updateTheme()
+    Settings.update()
 })
 
 
