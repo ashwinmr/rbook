@@ -26,6 +26,24 @@ function Set_Fullscreen(set_val) {
     }
 }
 
+// Set Theme
+function setTheme(theme) {
+    // Reset
+    document.getElementById("body").style.backgroundColor = "initial"
+    document.getElementById("next_page_area").style.backgroundColor = "black"
+    document.getElementById("previous_page_area").style.backgroundColor = "black"
+    Book.rendition.themes.override("color", "black")
+
+    if (theme === "Dark") {
+        document.getElementById("body").style.backgroundColor = "black"
+        document.getElementById("next_page_area").style.backgroundColor = "white"
+        document.getElementById("previous_page_area").style.backgroundColor = "white"
+        Book.rendition.themes.override("color", "white")
+    } else if (theme === "Sepia") {
+        document.getElementById("body").style.backgroundColor = "wheat"
+    }
+}
+
 // Class for storing location history
 class HistoryClass {
     constructor() {
@@ -414,6 +432,10 @@ ipcRenderer.on("Toggle_Single_Page", (e) => {
 ipcRenderer.on('Set_Fullscreen', (e, set_val) => {
     Set_Fullscreen(set_val)
 })
+ipcRenderer.on('Set_Theme', (e, theme) => {
+    setTheme(theme)
+})
+
 
 // Add button shortcuts
 document.getElementById('back').addEventListener('click', (e) => {

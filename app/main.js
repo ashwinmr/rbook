@@ -128,17 +128,17 @@ app.on('ready', function createWindow() {
                     // Theme options
                     submenu: [{
                             label: 'Light',
-                            click() { win.webContents.send('Theme_Light') },
+                            click() { win.webContents.send('Set_Theme', "Light") },
                             type: "radio",
                         },
                         {
                             label: 'Dark',
-                            click() { win.webContents.send('Theme_Dark') },
+                            click() { win.webContents.send('Set_Theme', "Dark") },
                             type: "radio",
                         },
                         {
                             label: 'Sepia',
-                            click() { win.webContents.send('Theme_Sepia') },
+                            click() { win.webContents.send('Set_Theme', "Sepia") },
                             type: "radio",
                         },
                     ]
