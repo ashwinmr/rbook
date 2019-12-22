@@ -95,7 +95,6 @@ class BookClass {
         this.fontSize = 100
         this.lastLocation = undefined
         this.generated = false
-        this.coverLocation = undefined
         this.containerElem = document.getElementById('book_cont')
         this.preventNextLocationUpdate = false
         this.iframeElem = undefined
@@ -202,9 +201,6 @@ class BookClass {
             // Set fontsize
             this.setFontSize(this.fontSize)
 
-            // Store the cover location
-            this.coverLocation = `epubcfi(${this.data.spine.items[0].cfiBase}!/4/1:0)`
-
             // Handle location change
             this.rendition.on('relocated', () => {
                 // Save as last location
@@ -252,7 +248,7 @@ class BookClass {
         }
         let location
         if (percent == 0) {
-            location = this.coverLocation
+            location = undefined
         } else {
             location = this.data.locations.cfiFromPercentage(percent / 100)
         }
