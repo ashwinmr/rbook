@@ -26,6 +26,30 @@ function Set_Fullscreen(set_val) {
     }
 }
 
+// Class for storing location history
+class HistoryClass {
+    constructor() {
+        this.data = []
+        this.size = 10
+    }
+
+    add(location) {
+        if (this.data.size >= this.size) {
+            this.data.shift()
+        }
+        this.data.push(location)
+    }
+
+    back() {
+        this.data.pop()
+    }
+
+    getLast() {
+        return this.data[this.data.length - 1]
+    }
+}
+History = new HistoryClass
+
 // Create object to handle file
 class FileClass {
 
@@ -75,6 +99,7 @@ class BookClass {
         this.containerElem = document.getElementById('book_cont')
         this.preventNextLocationUpdate = false
         this.iframeElem = undefined
+        this.history = []
     }
 
     load(filePath) {
@@ -185,6 +210,9 @@ class BookClass {
                 // Save as last location
                 this.lastLocation = this.rendition.currentLocation().start.cfi
 
+                // Add to history
+                History.add(this.rendition.currentLocation().start.cfi)
+
                 // Save storage
                 this.saveStorage()
 
@@ -230,6 +258,16 @@ class BookClass {
         }
         updateLocationPercent(percent)
         this.rendition.display(location)
+    }
+
+    goBack() {
+        if (this.rendition === undefined) {
+            return
+        }
+        History.back()
+        let temp = History.getLast()
+        History.back() // When displayed, the new page will be added again
+        this.rendition.display(temp)
     }
 
     setSinglePage(setVal) {
@@ -350,6 +388,9 @@ mousetrap.bind('ctrl+=', () => {
 ipcRenderer.on("Open", (e, filePath) => {
     File.open(filePath)
 })
+ipcRenderer.on("Back", (e) => {
+    Book.goBack()
+})
 ipcRenderer.on("Next_Page", (e) => {
     Book.nextPage()
 })
@@ -373,6 +414,9 @@ ipcRenderer.on('Set_Fullscreen', (e, set_val) => {
 })
 
 // Add button shortcuts
+document.getElementById('back').addEventListener('click', (e) => {
+    Book.goBack()
+})
 document.getElementById('decrease_font_size').addEventListener('click', (e) => {
     Book.incrementFontSize(-10)
 })

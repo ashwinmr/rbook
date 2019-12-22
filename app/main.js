@@ -94,6 +94,11 @@ app.on('ready', function createWindow() {
                     click() { win.webContents.send('Previous_Page') },
                     accelerator: 'Left'
                 },
+                {
+                    label: 'Back',
+                    click() { win.webContents.send('Back') },
+                    accelerator: 'Ctrl+Z'
+                },
             ]
         },
         {
