@@ -14,7 +14,7 @@ A simple electron app for reading epub files
 - Swipe to change page
 - Back button with history
 - Single/Double page view
-- Hotkeys
+- Keyboard shortcuts
 
 # Getting Started
 
