@@ -2,7 +2,7 @@
 
 A simple electron app for reading epub files
 
-![Screenshot](./screenshots/sc_1.png)
+![Screenshot](./screenshots/sc_2.png)
 
 # Features
 
