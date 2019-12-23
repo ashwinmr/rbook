@@ -31,11 +31,11 @@
             "category": ""
         },
         "appx": {
-            "identityName": "000pub.app",
-            "publisher": "CN=000",
-            "publisherDisplayName": "pub",
-            "applicationId": "app",
-            "displayName": "app"
+            "identityName": "37353raotech.rbook",
+            "publisher": "CN=FCA45FA4-92B8-42C6-A970-7C1960C49FB5",
+            "publisherDisplayName": "raotech",
+            "applicationId": "rbook",
+            "displayName": "rbook"
         }
     },
     "keywords": [],
