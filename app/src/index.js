@@ -78,6 +78,7 @@ class SettingsClass {
         }
 
         this.save()
+        ipcRenderer.send("Set_Theme", this.theme)
     }
 }
 Settings = new SettingsClass

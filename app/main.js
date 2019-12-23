@@ -128,16 +128,19 @@ app.on('ready', function createWindow() {
                     // Theme options
                     submenu: [{
                             label: 'Light',
+                            id: 'Theme_Light',
                             click() { win.webContents.send('Set_Theme', "Light") },
                             type: "radio",
                         },
                         {
                             label: 'Dark',
+                            id: 'Theme_Dark',
                             click() { win.webContents.send('Set_Theme', "Dark") },
                             type: "radio",
                         },
                         {
                             label: 'Sepia',
+                            id: 'Theme_Sepia',
                             click() { win.webContents.send('Set_Theme', "Sepia") },
                             type: "radio",
                         },
@@ -205,6 +208,18 @@ app.on('ready', function createWindow() {
     // Handle toggle fullscreen
     ipcMain.on('Toggle_Fullscreen', (e) => {
         Toggle_Fullscreen(win)
+    })
+
+    // Handle theme change response
+    ipcMain.on('Set_Theme', (e, theme) => {
+        console.log(theme)
+        if (theme === 'Dark') {
+            menu.getMenuItemById('Theme_Dark').checked = true
+        } else if (theme === 'Sepia') {
+            menu.getMenuItemById('Theme_Sepia').checked = true
+        } else {
+            menu.getMenuItemById('Theme_Light').checked = true
+        }
     })
 })
 
