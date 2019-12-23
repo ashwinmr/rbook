@@ -5,7 +5,7 @@ const url = require('url')
 
 // Debug options
 const Debug = {
-    DevTool: true,
+    DevTool: false,
 }
 
 // Check if path is file
