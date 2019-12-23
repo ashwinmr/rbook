@@ -57,11 +57,12 @@ class SettingsClass {
 
     update() {
         // Reset
-        document.getElementById("body").style.backgroundColor = "initial"
+        document.getElementById("body").style.backgroundColor = "white"
         document.getElementById("next_page_area").style.backgroundColor = "black"
         document.getElementById("previous_page_area").style.backgroundColor = "black"
         if (Book.rendition !== undefined) {
             Book.rendition.themes.override("color", "black")
+            Book.rendition.themes.override("background-color", "white")
         }
 
         if (this.theme === "Dark") {
@@ -70,9 +71,13 @@ class SettingsClass {
             document.getElementById("previous_page_area").style.backgroundColor = "white"
             if (Book.rendition !== undefined) {
                 Book.rendition.themes.override("color", "white")
+                Book.rendition.themes.override("background-color", "black")
             }
         } else if (this.theme === "Sepia") {
             document.getElementById("body").style.backgroundColor = "wheat"
+            if (Book.rendition !== undefined) {
+                Book.rendition.themes.override("background-color", "wheat")
+            }
         } else {
             this.setTheme("Light")
         }
