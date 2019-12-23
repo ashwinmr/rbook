@@ -1,12 +1,20 @@
 # rbook
 
-A simple electron app for reading ebooks
+A simple electron app for reading epub files
 
 ![Screenshot](./screenshots/sc_1.png)
 
 # Features
 
-- 
+- Clean interface
+- Themes (Light, Dark, Sepia)
+- Fullscreen mode
+- Page slider
+- Increase/Decrease font size
+- Swipe to change page
+- Back button with history
+- Single/Double page view
+- Hotkeys
 
 # Getting Started
 
