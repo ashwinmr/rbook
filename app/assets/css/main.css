@@ -53,7 +53,10 @@
 }
 
 #book_area {
+    top: 50px;
+    position: absolute;
     height: calc(100vh - 50px);
+    width: 100%;
     display: flex;
     justify-content: center;
 }
