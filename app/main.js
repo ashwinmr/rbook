@@ -3,7 +3,11 @@ const fs = require('fs')
 const path = require('path')
 const url = require('url')
 
-<<<<<<< HEAD
+// Debug options
+const Debug = {
+    DevTool: true,
+}
+
 // Check if path is file
 function Is_File(path) {
     if (fs.existsSync(path) && fs.lstatSync(path).isFile()) {
@@ -34,16 +38,6 @@ function Toggle_Fullscreen(win) {
         Set_Fullscreen(true)
     }
 }
-=======
-// Debug options
-const Debug = {
-    DevTool: true,
-}
-
-// Use the example cpp addon
-const example_addon = require('./build/Release/example_addon.node');
-console.log('cpp addon: ', example_addon.hello("from cpp"));
->>>>>>> upstream/develop
 
 // Start the program when app is ready
 app.on('ready', function createWindow() {
@@ -186,11 +180,8 @@ app.on('ready', function createWindow() {
             submenu: [{
                     label: 'DevTool',
                     accelerator: 'Ctrl+D',
-<<<<<<< HEAD
-=======
                     enabled: Debug.DevTool,
                     visible: Debug.DevTool,
->>>>>>> upstream/develop
                     click() {
                         win.webContents.toggleDevTools()
                     }

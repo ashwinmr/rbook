@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
     "name": "rbook",
-=======
-    "name": "electron_template",
->>>>>>> upstream/develop
     "version": "1.0.0",
     "description": "A simple epub reader",
     "repository": {},
