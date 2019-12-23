@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
     "name": "rbook",
+=======
+    "name": "electron_template",
+>>>>>>> upstream/develop
     "version": "1.0.0",
     "description": "A simple epub reader",
     "repository": {},
@@ -36,7 +40,8 @@
             "identityName": "000pub.app",
             "publisher": "CN=000",
             "publisherDisplayName": "pub",
-            "applicationId": "app"
+            "applicationId": "app",
+            "displayName": "app"
         }
     },
     "keywords": [],
