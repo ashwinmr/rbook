@@ -228,7 +228,6 @@ app.on('ready', function createWindow() {
 
     // Handle theme change response
     ipcMain.on('Set_Theme', (e, theme) => {
-        console.log(theme)
         if (theme === 'Dark') {
             menu.getMenuItemById('Theme_Dark').checked = true
         } else if (theme === 'Sepia') {
