@@ -189,7 +189,7 @@ app.on('ready', function createWindow() {
                 {
                     label: 'Privacy Policy',
                     click() {
-                        let link = 'https://www.google.com'
+                        let link = 'https://raotech3.blogspot.com/2019/12/rbook-privacy-policy.html'
                         shell.openExternal(link)
                     }
                 },
