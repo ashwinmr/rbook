@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron')
+const { app, BrowserWindow, Menu, dialog, ipcMain, shell } = require('electron')
 const fs = require('fs')
 const path = require('path')
 const url = require('url')
@@ -187,6 +187,13 @@ app.on('ready', function createWindow() {
                     }
                 },
                 {
+                    label: 'Privacy Policy',
+                    click() {
+                        let link = 'https://raotech3.blogspot.com/2019/12/rbook-privacy-policy.html'
+                        shell.openExternal(link)
+                    }
+                },
+                {
                     label: app.name + ' version ' + app.getVersion(),
                 }
             ]
@@ -221,7 +228,6 @@ app.on('ready', function createWindow() {
 
     // Handle theme change response
     ipcMain.on('Set_Theme', (e, theme) => {
-        console.log(theme)
         if (theme === 'Dark') {
             menu.getMenuItemById('Theme_Dark').checked = true
         } else if (theme === 'Sepia') {
